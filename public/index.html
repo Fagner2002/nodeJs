@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Button Click</title>
+</head>
+<body>
+  <button id="insertButton">Inserir Dados</button>
+
+  <button id="testeButton"></button>
+
+  <input type="text" id="name">
+
+  <script>
+    document.getElementById("insertButton").addEventListener("click", async () => {
+      try {
+        const response = await fetch('/insertData');
+        const data = await response.json();
+        alert(data.message);
+      } catch (error) {
+        console.error("Erro:", error);
+      }
+    });
+
+    document.getElementById("testeButton").addEventListener("click", async () => {
+      try {
+        const response = await fetch('http://localhost:8081/insertTeste', { 
+          method: 'POST', // Defina o método para POST
+        });
+  
+        const data = await response.json();
+        alert(data.message);
+      } catch (error) {
+        console.error("Erro:", error);
+      }
+    })
+  </script>
+</body>
+</html>
