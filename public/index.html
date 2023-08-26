@@ -4,11 +4,37 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Button Click</title>
+  <style>
+    /* Estilos CSS inline */
+    .container {
+      text-align: center;
+      margin-top: 50px;
+    }
+    .botao-principal {
+      background-color: #007bff;
+      color: #fff;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+    .botao-secundario {
+      background-color: #6c757d;
+      color: #fff;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 14px;
+    }
+  </style>
 </head>
 <body>
-  <button id="insertButton">Inserir Dados</button>
-
-  <button id="testeButton">Simples</button>
+  <div class="container">
+    <button class="botao-principal" id="insertButton">Inserir Dados</button>
+    <button class="botao-secundario" id="testeButton">Simples</button>
+  </div>
 
   <script>
     document.getElementById("insertButton").addEventListener("click", async () => {
