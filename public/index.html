@@ -8,9 +8,7 @@
 <body>
   <button id="insertButton">Inserir Dados</button>
 
-  <button id="testeButton"></button>
-
-  <input type="text" id="name">
+  <button id="testeButton">Simples</button>
 
   <script>
     document.getElementById("insertButton").addEventListener("click", async () => {
@@ -31,6 +29,7 @@
   
         const data = await response.json();
         alert(data.message);
+        console.log(data);
       } catch (error) {
         console.error("Erro:", error);
       }

@@ -17,7 +17,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.post('/insertTeste', (req, res) => {
   console.log('entrou no servidor');
-  // Aqui é onde você deve realizar a lógica para inserir os dados e enviar uma resposta ao cliente.
   res.json({ message: 'Requisição simples' });
 });
 
