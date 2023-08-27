@@ -6,9 +6,9 @@ document.addEventListener("DOMContentLoaded", function() {
         .then(data => {
         data.forEach(customer => {
             const row = customerTable.insertRow();
+            row.insertCell().textContent = customer.id;
             row.insertCell().textContent = customer.name;
             row.insertCell().textContent = customer.address;
-            row.insertCell().textContent = customer.id;
             row.insertCell().textContent = customer.status;
         });
         })

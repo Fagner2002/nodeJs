@@ -23,8 +23,16 @@
     font-size: 14px;
 }
 
+.container-table {
+    
+}
+
 .tabela {
-  width: 100%;
+  border: #007bff solid 5px;
+  text-align: center;
+  margin-left: 400px;
+
+  width: 50%;
   border-collapse: collapse;
   margin-top: 20px;
   font-family: Arial, sans-serif;
