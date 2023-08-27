@@ -1,3 +1,18 @@
+async function insertData () {
+    try {
+        const response = await fetch('/insertData');
+        const data = await response.json();
+        alert(data.message);
+
+        if (response.ok) {
+        // Recarrega a página após uma resposta de sucesso
+        window.location.reload();
+        }
+    } catch (error) {
+        console.error("Erro:", error);
+    }
+}
+
 document.addEventListener("DOMContentLoaded", function() {
     const customerTable = document.getElementById("customerTable").getElementsByTagName('tbody')[0];
 
@@ -37,3 +52,43 @@ document.getElementById("testeButton").addEventListener("click", async () => {
       console.error("Erro:", error);
     }
 })
+
+document.addEventListener("DOMContentLoaded", function() {
+    const customerTable = document.getElementById("customerTable").getElementsByTagName('tbody')[0];
+  
+    // ...
+  
+    document.getElementById("insertButton").addEventListener("click", async (event) => {
+      event.preventDefault(); // Impede o envio do formulário padrão
+  
+      const nameInput = document.querySelector('input[name="name"]');
+      const addressInput = document.querySelector('input[name="address"]');
+  
+      const name = nameInput.value;
+      const address = addressInput.value;
+  
+      if (name.trim() === "" || address.trim() === "") {
+        alert("Por favor, preencha todos os campos.");
+        return;
+      }
+  
+      try {
+        const response = await fetch('/insertData', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+          },
+          body: `name=${encodeURIComponent(name)}&address=${encodeURIComponent(address)}`,
+        });
+  
+        const data = await response.json();
+        alert(data.message);
+  
+        if (response.ok) {
+          window.location.reload();
+        }
+      } catch (error) {
+        console.error("Erro:", error);
+      }
+    });
+  });

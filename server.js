@@ -1,6 +1,8 @@
 const express = require('express');
 const mysql = require('mysql');
 const path = require('path');
+const bodyParser = require('body-parser');
+const { read } = require('fs');
 
 const app = express();
 
@@ -13,6 +15,7 @@ const con = mysql.createConnection({
 });
 
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(bodyParser.urlencoded({ extended: true }));
 
 function printAndHang(message) {
   console.log(message);
@@ -20,10 +23,24 @@ function printAndHang(message) {
   while (true) {}
 }
 
+app.post('/insertData', (req, res) => {
+  const userName = req.body.name
+  const address  = req.body.address
+
+  const query = "INSERT INTO customers (name, address) VALUES (?, ?)";
+  con.query(query, [userName, address], (err, result) => {
+    if (err) {
+      console.error("Erro ao inserir dados:", err);
+      res.status(500).json({ message: "Erro ao inserir dados" });
+    } else {
+      console.log("Dados inseridos com sucesso!");
+      res.json({ message: "Dados inseridos com sucesso!" });
+    }
+  });
+});
+
 app.get('/getCustomers', (req, res) => {
   const query = "SELECT c.name, c.address, c.id, c.status FROM customers c";
-  
-  console.log("Hi, Fagner");
 
   con.query(query, (err, results) => {
     if (err) {
