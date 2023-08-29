@@ -71,6 +71,11 @@ app.get('/insertData', (req, res) => {
   });
 });
 
+app.get('/insertTeste', (req, res) => {
+  console.log("Oi Fagner");
+  res.json({message: "Está funcionando"});
+})
+
 const PORT = 8081;
 app.listen(PORT, () => {
   console.log(`Servidor rodando na porta ${PORT}`);
