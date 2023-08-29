@@ -19,30 +19,46 @@ document.addEventListener("DOMContentLoaded", function() {
     fetch('/getCustomers')
         .then(response => response.json())
         .then(data => {
-        data.forEach(customer => {
-            const row = customerTable.insertRow();
-            // row.insertCell().textContent = customer.id;
-            row.insertCell().textContent = customer.name;
-            row.insertCell().textContent = customer.address;
-            row.insertCell().textContent = customer.status;
-
-          // adicionando icone
-          const trashCell = row.insertCell();
-          const trashIcon = document.createElement('i');
-          trashIcon.className = 'fa-solid fa-trash';
-          trashIcon.id = 'tabelaId';
-
-          trashIcon.addEventListener('click', async () => {
-            try {
-              const response = await fetch('/insertTeste');
-              const data = await response.json();
-              alert(data.message);
-            } catch (error) {
-              console.error("Erro:", error);
+          data.forEach(customer => {
+            console.log(customer.status);
+            if (customer.status === 0) {
+                const row = customerTable.insertRow();
+                row.insertCell().textContent = customer.name;
+                row.insertCell().textContent = customer.address;
+                row.insertCell().textContent = customer.status;
+        
+                const trashCell = row.insertCell();
+                const trashIcon = document.createElement('i');
+                trashIcon.className = 'fa-solid fa-trash';
+                
+                // Adicione o ID do cliente como atributo personalizado no ícone
+                trashIcon.setAttribute('data-customer-id', customer.id);
+        
+                trashIcon.addEventListener('click', async (event) => {
+                    const customerId = event.target.getAttribute('data-customer-id');
+                    
+                    try {
+                        const response = await fetch('/excluirPessoa', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify({ customerId })
+                        });
+        
+                        const data = await response.json();
+                        alert(data.message);
+                        window.location.reload();
+                    } catch (error) {
+                        console.error("Erro:", error);
+                    }
+                });
+        
+                trashCell.appendChild(trashIcon);
+            } else {
+                console.log('Está inativado');
             }
-          });
-          trashCell.appendChild(trashIcon);
-        });
+          });        
         })
     .catch(error => console.error('Erro:', error));
 });

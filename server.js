@@ -2,7 +2,7 @@ const express = require('express');
 const mysql = require('mysql');
 const path = require('path');
 const bodyParser = require('body-parser');
-const { read } = require('fs');
+const { read, copyFileSync } = require('fs');
 
 const app = express();
 
@@ -16,6 +16,7 @@ const con = mysql.createConnection({
 
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
 
 function printAndHang(message) {
   console.log(message);
@@ -71,10 +72,30 @@ app.get('/insertData', (req, res) => {
   });
 });
 
-app.get('/insertTeste', (req, res) => {
-  console.log("Oi Fagner");
-  res.json({message: "Está funcionando"});
-})
+app.post('/excluirPessoa', (req, res) => {
+  console.log('Oi')
+  const { customerId } = req.body;
+  
+  // Consulta SQL de atulização
+  // const query = updateQuery = `UPDATE customers SET customers.status WHERE id = ?`;
+  const updateQuery = `UPDATE customers SET customers.status = 1 WHERE customers.id = ?`;
+
+  // Execução da consulta
+  con.query(updateQuery, [customerId], (err, results) => {
+    if (err) {
+      console.error('Erro ao atualizar o cliente', err);
+    } else {
+      console.log('Cliente atulizado com sucesso.');
+    }
+
+    // Encerrar a conexão após a conclusão da consulta
+  });
+  const response = {
+    message: `Cliente com ID ${customerId} excluído com sucesso.`
+  };
+
+  res.json(response);
+});
 
 const PORT = 8081;
 app.listen(PORT, () => {
